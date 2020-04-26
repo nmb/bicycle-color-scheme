@@ -21,10 +21,14 @@ function addColorPickers(imageId, targetId){
     let label = a.getAttribute("inkscape:label");
     let id = a.id;
     let pickerId = "picker-" + id;
+    let colPickDiv = document.createElement('div');
     let colPick = document.createElement('input');
     colPick.type = "color";
     colPick.id = pickerId;
     colPick.title = label;
+    let colPickLabel = document.createElement('label');
+    colPickLabel.for = pickerId;
+    colPickLabel.innerText = label;
     // get value 
     partId = a.getElementsByTagName("inkscape:tagref").item(0).getAttribute("xlink:href").replace('#', '');
     let initColor = '#FFFFFF';
@@ -37,7 +41,9 @@ function addColorPickers(imageId, targetId){
 
     colPick.onchange = function(){setColor(imageId, id, pickerId);};
     colPick.value = initColor;
-    pickerContainer.appendChild(colPick);
+    colPickDiv.appendChild(colPickLabel);
+    colPickDiv.appendChild(colPick);
+    pickerContainer.appendChild(colPickDiv);
   }
 };
 
