@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
     <script src="js/svg-inject.min.js"></script>
     <script src="js/color-pick.js"></script>
+    <script type="text/javascript" src="js/web-share-shim.bundle.min.js"></script>
   </head>
   <body>
     <div class="flex-grid">
@@ -16,14 +17,34 @@
       <div id="colorPickers" class="col" style="max-width:256px">
       </div>
     </div>
+    <button id="sharebtn" title="share" >Share</button>
   </body>
   <script>
+    // add color buttons and parse scheme from URL
     document.addEventListener('DOMContentLoaded', function() {
       SVGInject(document.getElementById('image'),{
         onAllFinish: function() {
+          // add buttons
           addColorPickers("image", "colorPickers")
+          // set current color scheme from query parameters
+          params = new URLSearchParams(window.location.search);
+          if (params.has("scheme")) {
+            setColorScheme(JSON.parse(atob(params.get("scheme"))));
+          }
         }
       });
+
+      var target = document.getElementById("sharebtn");
+      target.addEventListener('click', () => {
+        navigator.share({
+          title: 'Bicycle color schema',
+          text: "",
+          url: window.location.href.split('?')[0] + "?scheme=" + btoa(JSON.stringify(getColorScheme()))
+        }).catch(err => {
+          console.log("Could not share. Error:", err.message);
+        });
+      });
     });
+
   </script>
 </html>

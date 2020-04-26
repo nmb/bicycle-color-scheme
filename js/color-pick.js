@@ -26,6 +26,7 @@ function addColorPickers(imageId, targetId){
     colPick.type = "color";
     colPick.id = pickerId;
     colPick.title = label;
+    colPick.className += "imgColorPicker";
     let colPickLabel = document.createElement('label');
     colPickLabel.for = pickerId;
     colPickLabel.innerText = label;
@@ -66,3 +67,20 @@ function setColor(imageId, id, pickerId){
   }
 };
 
+// get current color scheme
+function getColorScheme(){
+  var colorScheme = {};
+  for(let p of document.getElementsByClassName("imgColorPicker")) {
+    colorScheme[p.id] = p.value;
+  }
+  return colorScheme;
+}
+
+// set colorScheme from object
+function setColorScheme(colorScheme){
+  for(let [id, color] of Object.entries(colorScheme)) {
+    let picker = document.getElementById(id);
+    picker.value = color;
+    picker.onchange();
+  }
+}
