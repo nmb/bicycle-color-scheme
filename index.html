@@ -4,14 +4,19 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
     <script src="js/svg-inject.min.js"></script>
     <script src="js/color-pick.js"></script>
   </head>
-   <body>
-     <img id="image" src="img/roadbike.svg" />
-     <div id="colorPickers">
-     </div>
-   </body>
+  <body>
+    <div class="flex-grid">
+      <div class="col">
+      <img id="image" src="img/roadbike.svg" />
+      </div>
+      <div id="colorPickers" class="col" style="max-width:256px">
+      </div>
+    </div>
+  </body>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       SVGInject(document.getElementById('image'),{

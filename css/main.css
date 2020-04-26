@@ -1,0 +1,14 @@
+.flex-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+.col {
+  flex: 1;
+  min-width: 256px;
+}
+
+@media only screen and (max-width: 768px) {
+  .col {
+    width: 100%;
+  };
+}
