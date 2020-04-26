@@ -34,6 +34,7 @@
         }
       });
 
+      // add share button
       var target = document.getElementById("sharebtn");
       target.addEventListener('click', () => {
         navigator.share({
@@ -44,6 +45,27 @@
           console.log("Could not share. Error:", err.message);
         });
       });
+
+      function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+      };
+
+      // add download button
+      dbtn = document.createElement("button");
+      dbtn.innerText = "Download";
+      //dbtn.onclick = download("rdbk.svg", encodeURIComponent(document.getElementById("image").outerHTML));
+      dbtn.onclick = function(){download("rdbk.svg", document.getElementById("image").outerHTML)};
+      document.body.appendChild(dbtn);
+
     });
 
   </script>
