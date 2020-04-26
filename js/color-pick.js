@@ -50,9 +50,7 @@ function addColorPickers(imageId, targetId){
 
 // set color of selection
 function setColor(imageId, id, pickerId){
-  console.log(id);
   var val = document.getElementById(pickerId).value;
-  console.log(val);
   var img = document.getElementById(imageId);
   let area = document.getElementById(id);
   for(let part of area.getElementsByTagName("inkscape:tagref")){
