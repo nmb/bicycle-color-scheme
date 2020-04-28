@@ -77,9 +77,14 @@
       // add download button
       dbtn = document.createElement("button");
       dbtn.innerText = "Download";
-      //dbtn.onclick = download("rdbk.svg", encodeURIComponent(document.getElementById("image").outerHTML));
       dbtn.onclick = function(){download("rdbk.svg", document.getElementById("image").outerHTML)};
       document.getElementById("content").appendChild(dbtn);
+
+      // add reset button
+      rbtn = document.createElement("button");
+      rbtn.innerText = "Reset";
+      rbtn.onclick = function(){setColorScheme(initialColors)};
+      document.getElementById("content").appendChild(rbtn);
 
     });
 
