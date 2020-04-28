@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/share-api-polyfill/dist/share-min.js"></script>
   </head>
   <body>
+    <div id="content">
     <div class="flex-grid">
       <div class="col">
       <img id="image" src="img/roadbike.svg" />
@@ -19,7 +20,11 @@
       </div>
     </div>
     <button id="sharebtn" title="share" >Share</button>
+    </div>
   </body>
+    <footer>
+      <a href="https://github.com/nmb/bicycle-color-scheme"><img src="img/github.svg" /></a>
+    </footer>
   <script>
     // add color buttons and parse scheme from URL
     document.addEventListener('DOMContentLoaded', function() {
@@ -27,10 +32,16 @@
         onAllFinish: function() {
           // add buttons
           addColorPickers("image", "colorPickers")
+          // save initial color scheme
+          initialColors = getColorScheme();
           // set current color scheme from query parameters
           params = new URLSearchParams(window.location.search);
           if (params.has("scheme")) {
             setColorScheme(JSON.parse(atob(params.get("scheme"))));
+          }
+          else if(params.has("c")) {
+            let paramColorScheme = keyedSchemeStr2Scheme(params.get("c"), initialColors) 
+            setColorScheme(paramColorScheme);
           }
         }
       });
@@ -38,10 +49,13 @@
       // add share button
       var target = document.getElementById("sharebtn");
       target.addEventListener('click', () => {
+        var diff = colorDiff(getColorScheme(), initialColors)
+        var ckScheme = colorKeyedScheme(diff, initialColors)
+        var params = colorKeyedSchemeStr(ckScheme)
         navigator.share({
           title: 'Bicycle color schema',
           text: "",
-          url: window.location.href.split('?')[0] + "?scheme=" + btoa(JSON.stringify(getColorScheme()))
+          url: window.location.href.split('?')[0] + "?c=" + encodeURIComponent(params)
         }).catch(err => {
           console.log("Could not share. Error:", err.message);
         });
@@ -65,7 +79,7 @@
       dbtn.innerText = "Download";
       //dbtn.onclick = download("rdbk.svg", encodeURIComponent(document.getElementById("image").outerHTML));
       dbtn.onclick = function(){download("rdbk.svg", document.getElementById("image").outerHTML)};
-      document.body.appendChild(dbtn);
+      document.getElementById("content").appendChild(dbtn);
 
     });
 

@@ -82,3 +82,55 @@ function setColorScheme(colorScheme){
     picker.onchange();
   }
 }
+
+// get colorScheme changes
+function colorDiff(c1, c2){
+  var diff = {}
+  for(let [id, color] of Object.entries(c1)){
+    if(c2[id] != color) {
+      diff[id] = color
+    }
+  }
+  return diff
+}
+
+// get color-keyed scheme
+// entries: "color" -> [area indices]
+function colorKeyedScheme(c, refColorScheme){
+  // obtain array of unique colors
+  var colors = [... new Set(Object.values(c))]
+  // array of area keys from reference scheme
+  var ids = [... new Set(Object.keys(refColorScheme))]
+  var res = {}
+  for(let i in ids){
+    if(c[ids[i]])
+      res[c[ids[i]]] ? res[c[ids[i]]].push(i) : res[c[ids[i]]] = [i];
+  }
+  return res
+}
+
+// convert color-keyed scheme to string
+function colorKeyedSchemeStr(c, refColorScheme){
+  var res = "";
+  for(let [key,val] of Object.entries(c)){
+    res += key + ":" + val.toString();
+  }
+  return res;
+}
+
+// convert string to colorScheme
+function keyedSchemeStr2Scheme(str, refColorScheme){
+  s = {};
+  var colorIndex = [... new Set(Object.keys(refColorScheme))]
+  for(let cstr of str.split('#')){
+    let col, ind
+    if(cstr.split(":").length != 2) continue;
+    [col, ind] = cstr.split(":")
+    if(!col || !ind) continue;
+    for(let i of ind.split(",")){
+      if(!colorIndex[i]) continue;
+      s[colorIndex[i]] = '#'+col
+    }
+  }
+  return s
+}
