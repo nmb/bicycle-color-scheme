@@ -1,6 +1,6 @@
 # Bicycle Color Scheme
 
-* This is a single page web app for designing bicycle color schemes.
+* This repo is for a single web page for designing bicycle color schemes.
 * The illustration, taken from https://freesvg.org/road-bike, was enriched with
 selection sets using [inkscape](https://inkscape.org). 
 * Designs can be shared via a [web share
