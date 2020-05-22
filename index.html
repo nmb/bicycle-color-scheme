@@ -33,7 +33,7 @@
           // add buttons
           addColorPickers("image", "colorPickers")
           // save initial color scheme
-          initialColors = getColorScheme();
+          initialColors = getColorScheme("imgColorPicker");
           // set current color scheme from query parameters
           params = new URLSearchParams(window.location.search);
           if (params.has("scheme")) {
@@ -49,7 +49,7 @@
       // add share button
       var target = document.getElementById("sharebtn");
       target.addEventListener('click', () => {
-        var diff = colorDiff(getColorScheme(), initialColors)
+        var diff = colorDiff(getColorScheme("imgColorPicker"), initialColors)
         var ckScheme = colorKeyedScheme(diff, initialColors)
         var params = colorKeyedSchemeStr(ckScheme)
         navigator.share({

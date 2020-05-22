@@ -65,16 +65,17 @@ function setColor(imageId, id, pickerId){
   }
 };
 
-// get current color scheme
-function getColorScheme(){
+// get current color scheme as a hash with id:s of className as keys and colors
+// as values
+function getColorScheme(className){
   var colorScheme = {};
-  for(let p of document.getElementsByClassName("imgColorPicker")) {
+  for(let p of document.getElementsByClassName(className)) {
     colorScheme[p.id] = p.value;
   }
   return colorScheme;
 }
 
-// set colorScheme from object
+// set colors from colorScheme object
 function setColorScheme(colorScheme){
   for(let [id, color] of Object.entries(colorScheme)) {
     let picker = document.getElementById(id);
@@ -83,7 +84,8 @@ function setColorScheme(colorScheme){
   }
 }
 
-// get colorScheme changes
+// get diff between two colorSchemes c1 and c2
+// in the form of a colorScheme hash
 function colorDiff(c1, c2){
   var diff = {}
   for(let [id, color] of Object.entries(c1)){
@@ -94,8 +96,8 @@ function colorDiff(c1, c2){
   return diff
 }
 
-// get color-keyed scheme
-// entries: "color" -> [area indices]
+// get color-keyed scheme, a hash with
+// entries: "color" -> [indices of id:s with that color]
 function colorKeyedScheme(c, refColorScheme){
   // obtain array of unique colors
   var colors = [... new Set(Object.values(c))]
@@ -109,7 +111,7 @@ function colorKeyedScheme(c, refColorScheme){
   return res
 }
 
-// convert color-keyed scheme to string
+// convert color-keyed scheme to string 
 function colorKeyedSchemeStr(c, refColorScheme){
   var res = "";
   for(let [key,val] of Object.entries(c)){
